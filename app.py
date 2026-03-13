@@ -12,8 +12,8 @@ API_KEY = "2c822f13d4ab812e4c9c67d7cdcb0b53"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load pickle files
-movies_dict = pickle.load(open(os.path.join(BASE_DIR, 'movie_dict.pkl'), 'rb'))
-similarity = pickle.load(open(os.path.join(BASE_DIR, 'similarity.pkl'), 'rb'))
+movies_dict = pickle.load(open('movie_dict.pkl','rb'))
+similarity = pickle.load(open('similarity.pkl','rb'))
 
 movies = pd.DataFrame(movies_dict)
 
