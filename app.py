@@ -12,20 +12,19 @@ API_KEY = "2c822f13d4ab812e4c9c67d7cdcb0b53"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load pickle files
-movies_dict = pickle.load(open('movie_dict.pkl','rb'))
-similarity = pickle.load(open('similarity.pkl','rb'))
+movies_dict = pickle.load(open(os.path.join(BASE_DIR, 'movie_dict.pkl'), 'rb'))
+similarity = pickle.load(open(os.path.join(BASE_DIR, 'similarity.pkl'), 'rb'))
 
 movies = pd.DataFrame(movies_dict)
 
-
-# Function to fetch poster from TMDB with error handling and retries
+# Function to fetch poster from TMDB
 def fetch_poster(movie_title):
     url = f"https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&query={movie_title}"
 
-    for attempt in range(3):  # try up to 3 times
+    for attempt in range(3):
         try:
-            response = requests.get(url, timeout=5)  # 5 seconds timeout
-            response.raise_for_status()  # raise error for bad HTTP status
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
             data = response.json()
 
             if data['results']:
@@ -33,11 +32,11 @@ def fetch_poster(movie_title):
                 if poster_path:
                     return "https://image.tmdb.org/t/p/w500" + poster_path
             return None
+
         except requests.exceptions.RequestException as e:
             print(f"Request failed (attempt {attempt + 1}): {e}")
-            time.sleep(2)  # wait 2 seconds before retrying
+            time.sleep(2)
 
-    # Return placeholder image if all retries fail or no poster found
     return "https://via.placeholder.com/500x750?text=No+Image"
 
 
