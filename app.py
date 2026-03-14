@@ -4,12 +4,18 @@ import pandas as pd
 import os
 import requests
 import time
+import gdown
 
 # 🔑 Paste your TMDB API key here
 API_KEY = "2c822f13d4ab812e4c9c67d7cdcb0b53"
 
 # Get folder where app.py exists
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+url = "https://drive.google.com/uc?id=1GZuMBDJC1DQkkHjYG40erLTNYkRoDE-0"
+output = "similarity.pkl"
+
+if not os.path.exists(output):
+    gdown.download(url, output, quiet=False)
 
 # Load pickle files
 movies_dict = pickle.load(open(os.path.join(BASE_DIR, 'movie_dict.pkl'), 'rb'))
